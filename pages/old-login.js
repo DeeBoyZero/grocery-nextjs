@@ -20,14 +20,6 @@ const Login = () => {
     ) {
       router.push("/");
     }
-
-    // const itemData = {
-    //   name: enteredName,
-    //   quantity: enteredQuantity,
-    //   location: enteredLocation,
-    // };
-
-    // props.addItem(itemData);
   };
 
   return (
@@ -64,9 +56,6 @@ const Login = () => {
               placeholder="******************"
               ref={passwordInputRef}
             />
-            <p className="text-red-500 text-xs italic hidden">
-              Please choose a password.
-            </p>
           </div>
           <div className="flex items-center justify-between">
             <button

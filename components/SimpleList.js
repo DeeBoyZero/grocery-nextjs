@@ -15,6 +15,11 @@ const SimpleList = ({ items, addItem }) => {
 
   return (
     <div className="flex flex-col justify-center items-center w-3/4 text-sm md:text-lg">
+      <div className="flex">
+        <button className="btn" onClick={addItemHandler}>
+          Add an item
+        </button>
+      </div>
       <table className="w-3/4 my-5">
         <thead className="text-black">
           <tr className="bg-blue-300 flexflex-row rounded-l-lg mb-2">
@@ -54,11 +59,11 @@ const SimpleList = ({ items, addItem }) => {
           })}
         </tbody>
       </table>
-      <div className="flex">
+      {/* <div className="flex mb-5">
         <button className="btn" onClick={addItemHandler}>
           Add an item
         </button>
-      </div>
+      </div> */}
       {modalIsOpen && (
         <AddItemModal
           onCancel={closeModalHandler}

@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { signIn, signOut, useSession } from "next-auth/client";
+import Link from "next/link";
+import Main from "../layout/main";
 import Head from "next/head";
 import MainNavigation from "../components/MainNavigation";
 import SimpleList from "../components/SimpleList";
@@ -11,6 +14,7 @@ export default function Home({ isConnected }) {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedItems, setLoadedItems] = useState([]);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [session, loading] = useSession();
   const router = useRouter();
 
   useEffect(() => {
@@ -51,7 +55,7 @@ export default function Home({ isConnected }) {
       });
   };
 
-  if (isLoading) {
+  if (loading) {
     return (
       <section>
         <MainNavigation />
@@ -61,20 +65,46 @@ export default function Home({ isConnected }) {
   }
 
   return (
-    <div className="">
-      <Head>
-        <title>Grocery App</title>
-        <link rel="icon" href="/favicon.ico" />
-        <script
-          src="https://kit.fontawesome.com/efbc71dc9d.js"
-          crossorigin="anonymous"
-        ></script>
-      </Head>
-      <MainNavigation />
-      <div className="flex justify-center mt-20">
-        <SimpleList items={loadedItems} addItem={addItemHandler} />
-      </div>
-    </div>
+    <Main>
+      {!session && (
+        <div>
+          <Head>
+            <title>Sign In</title>
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <div className="flex flex-col justify-center mt-10">
+            <div>
+              <p className="flex justify-center text-lg">
+                You are not permitted to see this page.
+              </p>
+            </div>
+            <div className="flex justify-center">
+              <button
+                onClick={signIn}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-4"
+              >
+                Sign in
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {session && (
+        <div className="">
+          <Head>
+            <title>Grocery App</title>
+            <link rel="icon" href="/favicon.ico" />
+            <script
+              src="https://kit.fontawesome.com/efbc71dc9d.js"
+              crossorigin="anonymous"
+            ></script>
+          </Head>
+          <div className="flex justify-center mt-5">
+            <SimpleList items={loadedItems} addItem={addItemHandler} />
+          </div>
+        </div>
+      )}
+    </Main>
   );
 }
 

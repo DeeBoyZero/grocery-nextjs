@@ -9,7 +9,6 @@ const MainNavigation = () => {
   return (
     <>
       <Head>
-        <link rel="icon" href="/favicon.ico" />
         <script
           src="https://kit.fontawesome.com/efbc71dc9d.js"
           crossorigin="anonymous"
@@ -18,7 +17,7 @@ const MainNavigation = () => {
       <nav className="flex items-center justify-between flex-wrap bg-blue-300 p-6">
         <div className="flex items-center flex-shrink-0 text-black mr-6">
           <span className="font-semibold text-xl tracking-tight">
-            <i className="fas fa-shopping-cart"></i> Grocery App
+            <i aria-hidden className="fas fa-shopping-cart"></i> Grocery App
           </span>
           <span className="lg:hidden"></span>
         </div>

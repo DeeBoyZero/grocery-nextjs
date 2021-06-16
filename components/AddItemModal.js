@@ -22,6 +22,13 @@ const Modal = (props) => {
     props.onConfirm();
   };
 
+  const handleResetForm = (e) => {
+    e.preventDefault();
+    nameInputRef.current.value = "";
+    quantityInputRef.current.value = "";
+    locationInputRef.current.value = "";
+  };
+
   return (
     <div
       className="min-w-screen h-screen overflow-x-hidden overflow-y-auto fixed  my-auto inset-0 z-50 outline-none focus:outline-none  items-center flex justify-center"
@@ -80,8 +87,10 @@ const Modal = (props) => {
             >
               Add Item
             </button>
-            {/* TODO: Reset form logic */}
-            <button className="h-10 px-5 m-2 text-red-100 transition-colors duration-150 bg-red-700 rounded-lg focus:shadow-outline hover:bg-red-800">
+            <button
+              onClick={handleResetForm}
+              className="h-10 px-5 m-2 text-red-100 transition-colors duration-150 bg-red-700 rounded-lg focus:shadow-outline hover:bg-red-800"
+            >
               Reset Form
             </button>
             <button

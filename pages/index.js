@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/client";
 import Main from "../layout/main";
 import Head from "next/head";
-import MainNavigation from "../components/MainNavigation";
 import SimpleList from "../components/SimpleList";
 
 import { connectToDatabase } from "../utils/mongodb";
@@ -10,7 +9,7 @@ import { connectToDatabase } from "../utils/mongodb";
 import { useRouter } from "next/router";
 
 export default function Home({ isConnected }) {
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [loadedItems, setLoadedItems] = useState([]);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [session, loading] = useSession();
@@ -21,7 +20,7 @@ export default function Home({ isConnected }) {
   };
 
   useEffect(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
     fetch("/api/items")
       .then((response) => {
         return response.json();
@@ -36,7 +35,7 @@ export default function Home({ isConnected }) {
           };
           items.push(item);
         }
-        setIsLoading(false);
+        // setIsLoading(false);
         setLoadedItems(items);
         setIsFormSubmitted(false);
       });
@@ -76,10 +75,9 @@ export default function Home({ isConnected }) {
 
   if (loading) {
     return (
-      <section>
-        <MainNavigation />
+      <Main>
         <p>Loading...</p>
-      </section>
+      </Main>
     );
   }
 
@@ -113,10 +111,6 @@ export default function Home({ isConnected }) {
           <Head>
             <title>Grocery App</title>
             <link rel="icon" href="/favicon.ico" />
-            <script
-              src="https://kit.fontawesome.com/efbc71dc9d.js"
-              crossorigin="anonymous"
-            ></script>
           </Head>
           <div className="flex justify-center mt-5">
             <SimpleList

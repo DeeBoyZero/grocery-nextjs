@@ -21,7 +21,7 @@ const MainNavigation = () => {
           </span>
         </div>
         {session && (
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <i
               onClick={signOut}
               className="fas fa-sign-out-alt fa-2x text-black"

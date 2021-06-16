@@ -30,7 +30,7 @@ const Modal = (props) => {
       className="min-w-screen h-screen overflow-x-hidden overflow-y-auto fixed  my-auto inset-0 z-50 outline-none focus:outline-none  items-center flex justify-center"
       id="modal-id"
     >
-      <div className="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white ">
+      <div className="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-blue-50">
         <form className="p-5">
           <div className="flex flex-col justify-center">
             <input

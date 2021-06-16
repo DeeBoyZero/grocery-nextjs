@@ -19,8 +19,15 @@ const MainNavigation = () => {
           <span className="font-semibold text-xl tracking-tight">
             <i aria-hidden className="fas fa-shopping-cart"></i> Grocery App
           </span>
-          <span className="lg:hidden"></span>
         </div>
+        {session && (
+          <div className="md:hidden">
+            <i
+              onClick={signOut}
+              className="fas fa-sign-out-alt fa-2x text-black"
+            ></i>
+          </div>
+        )}
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto text-black hidden md:visible">
           {!session && <></>}
           {session && (

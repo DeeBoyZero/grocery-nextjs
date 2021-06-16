@@ -22,7 +22,7 @@ const Modal = (props) => {
     };
 
     props.editItem(itemData);
-    props.onConfirm();
+    props.onClick();
   };
 
   return (

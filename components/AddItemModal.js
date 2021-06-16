@@ -19,7 +19,7 @@ const Modal = (props) => {
     };
 
     props.addItem(itemData);
-    props.onConfirm();
+    props.onClick();
   };
 
   const handleResetForm = (e) => {

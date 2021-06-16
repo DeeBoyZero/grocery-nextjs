@@ -16,10 +16,6 @@ const SimpleList = ({ items, addItem, editItem, changeFormSubmitState }) => {
     setAddModalIsOpen(false);
   };
 
-  // const editItemModalHandler = () => {
-  //   setEditModalIsOpen(true);
-  // };
-
   const closeEditModalHandler = () => {
     setEditModalIsOpen(false);
   };
@@ -59,7 +55,6 @@ const SimpleList = ({ items, addItem, editItem, changeFormSubmitState }) => {
       })
       .finally(() => {
         setEditModalIsOpen(true);
-        console.log(currentItem);
       });
   };
 
@@ -123,20 +118,12 @@ const SimpleList = ({ items, addItem, editItem, changeFormSubmitState }) => {
         </button>
       </div> */}
       {AddModalIsOpen && (
-        <AddItemModal
-          onCancel={closeAddModalHandler}
-          onConfirm={closeAddModalHandler}
-          onClick={closeAddModalHandler}
-          addItem={addItem}
-          currentItem={currentItem}
-        />
+        <AddItemModal onClick={closeAddModalHandler} addItem={addItem} />
       )}
       {AddModalIsOpen && <Backdrop onClick={closeAddModalHandler} />}
 
       {EditModalIsOpen && (
         <EditItemModal
-          onCancel={closeEditModalHandler}
-          onConfirm={closeEditModalHandler}
           onClick={closeEditModalHandler}
           editItem={editItem}
           currentItem={currentItem}

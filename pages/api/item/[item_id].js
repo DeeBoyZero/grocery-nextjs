@@ -5,7 +5,6 @@ const handler = async (req, res) => {
   const { db } = await connectToDatabase();
   const col = db.collection("items");
   const { item_id } = req.query;
-  //   res.json(`Item_Id: ${item_id}`);
 
   try {
     if (req.method === "GET") {
@@ -14,7 +13,14 @@ const handler = async (req, res) => {
           _id: ObjectId(item_id),
         };
         const item = await col.findOne(doc);
+        console.dir(item.matchedCount);
+        // if (item.matchedCount >= 1) {
         await res.json(item);
+        // } else {
+        //   await res.json({
+        //     message: `Item with id ${item_id} was not found in the database`,
+        //   });
+        // }
       } catch (e) {
         console.dir(e);
       }

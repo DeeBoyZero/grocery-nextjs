@@ -13,14 +13,7 @@ const handler = async (req, res) => {
           _id: ObjectId(item_id),
         };
         const item = await col.findOne(doc);
-        console.dir(item.matchedCount);
-        // if (item.matchedCount >= 1) {
         await res.json(item);
-        // } else {
-        //   await res.json({
-        //     message: `Item with id ${item_id} was not found in the database`,
-        //   });
-        // }
       } catch (e) {
         console.dir(e);
       }

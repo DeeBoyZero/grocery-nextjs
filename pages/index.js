@@ -9,7 +9,6 @@ import { connectToDatabase } from "../utils/mongodb";
 import { useRouter } from "next/router";
 
 export default function Home({ isConnected }) {
-  // const [isLoading, setIsLoading] = useState(true);
   const [loadedItems, setLoadedItems] = useState([]);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [session, loading] = useSession();
@@ -20,7 +19,6 @@ export default function Home({ isConnected }) {
   };
 
   useEffect(() => {
-    // setIsLoading(true);
     fetch("/api/items")
       .then((response) => {
         return response.json();
@@ -35,7 +33,6 @@ export default function Home({ isConnected }) {
           };
           items.push(item);
         }
-        // setIsLoading(false);
         setLoadedItems(items);
         setIsFormSubmitted(false);
       });

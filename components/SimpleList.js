@@ -1,19 +1,31 @@
 import { useState } from "react";
 import AddItemModal from "./AddItemModal";
+import EditItemModal from "./EditItemModal";
 import Backdrop from "./Backdrop";
 
-const SimpleList = ({ items, addItem, changeFormSubmitState }) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+const SimpleList = ({ items, addItem, editItem, changeFormSubmitState }) => {
+  const [AddModalIsOpen, setAddModalIsOpen] = useState(false);
+  const [EditModalIsOpen, setEditModalIsOpen] = useState(false);
+  const [currentItem, setCurrentItem] = useState({});
 
   const addItemHandler = () => {
-    setModalIsOpen(true);
+    setAddModalIsOpen(true);
   };
 
-  const closeModalHandler = () => {
-    setModalIsOpen(false);
+  const closeAddModalHandler = () => {
+    setAddModalIsOpen(false);
+  };
+
+  // const editItemModalHandler = () => {
+  //   setEditModalIsOpen(true);
+  // };
+
+  const closeEditModalHandler = () => {
+    setEditModalIsOpen(false);
   };
 
   const deleteItemHandler = (e) => {
+    e.preventDefault();
     const item = {
       itemId: e.target.parentElement.parentElement.dataset.id,
     };
@@ -31,6 +43,24 @@ const SimpleList = ({ items, addItem, changeFormSubmitState }) => {
           console.log(e);
         });
     }
+  };
+
+  const editItemHandler = (e) => {
+    e.preventDefault();
+
+    const itemId = String(e.target.parentElement.parentElement.dataset.id);
+    fetch(`/api/item/${itemId}`, {
+      method: "GET",
+    })
+      .then((data) => data.json())
+      .then((jsonData) => setCurrentItem(jsonData))
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setEditModalIsOpen(true);
+        console.log(currentItem);
+      });
   };
 
   return (
@@ -69,11 +99,12 @@ const SimpleList = ({ items, addItem, changeFormSubmitState }) => {
                   {item.location}
                 </td>
                 <td className="border-grey-light border hover:bg-gray-100 p-3">
-                  {/* TODO: EDIT Logic */}
-                  <span className="hover:bg-gray-100 p-2 text-green-400 hover:text-green-600 cursor-pointer">
+                  <span
+                    onClick={editItemHandler}
+                    className="hover:bg-gray-100 p-2 text-green-400 hover:text-green-600 cursor-pointer"
+                  >
                     Edit
                   </span>
-                  {/* TODO: DELETE Logic */}
                   <span
                     onClick={deleteItemHandler}
                     className="hover:bg-gray-100 p-2 text-red-400 hover:text-red-600 cursor-pointer"
@@ -91,15 +122,27 @@ const SimpleList = ({ items, addItem, changeFormSubmitState }) => {
           Add an item
         </button>
       </div> */}
-      {modalIsOpen && (
+      {AddModalIsOpen && (
         <AddItemModal
-          onCancel={closeModalHandler}
-          onConfirm={closeModalHandler}
-          onClick={closeModalHandler}
+          onCancel={closeAddModalHandler}
+          onConfirm={closeAddModalHandler}
+          onClick={closeAddModalHandler}
           addItem={addItem}
+          currentItem={currentItem}
         />
       )}
-      {modalIsOpen && <Backdrop onClick={closeModalHandler} />}
+      {AddModalIsOpen && <Backdrop onClick={closeAddModalHandler} />}
+
+      {EditModalIsOpen && (
+        <EditItemModal
+          onCancel={closeEditModalHandler}
+          onConfirm={closeEditModalHandler}
+          onClick={closeEditModalHandler}
+          editItem={editItem}
+          currentItem={currentItem}
+        />
+      )}
+      {EditModalIsOpen && <Backdrop onClick={closeEditModalHandler} />}
     </div>
   );
 };

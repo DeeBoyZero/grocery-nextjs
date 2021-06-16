@@ -23,7 +23,6 @@ const MainNavigation = () => {
           <span className="lg:hidden"></span>
         </div>
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto text-black hidden md:visible">
-          {/* TODO: AUTHENTICATION */}
           {!session && <></>}
           {session && (
             <>

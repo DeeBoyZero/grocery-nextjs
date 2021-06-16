@@ -37,6 +37,23 @@ export default async (req, res) => {
       } catch (e) {
         res.json(e.message);
       }
+    } else if (req.method === "PUT") {
+      const itemId = req.body._id;
+      const doc = {
+        _id: ObjectId(itemId),
+      };
+      const r = await col.updateOne(doc, {
+        $set: {
+          name: req.body.name,
+          quantity: req.body.quantity,
+          location: req.body.location,
+        },
+      });
+      if (r.modifiedCount >= 1) {
+        res.json({ message: `Item ${itemId} was updated successfully!` });
+      } else {
+        res.json({ message: "There was an error while updating your record" });
+      }
     }
   } catch {
     res.status(500).json({ message: "There was an error with the database" });

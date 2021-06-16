@@ -4,6 +4,7 @@ const Modal = (props) => {
   const nameInputRef = useRef();
   const quantityInputRef = useRef();
   const locationInputRef = useRef();
+  const idInputRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,14 +12,16 @@ const Modal = (props) => {
     const enteredName = nameInputRef.current.value;
     const enteredQuantity = quantityInputRef.current.value;
     const enteredLocation = locationInputRef.current.value;
+    const enteredId = idInputRef.current.value;
 
     const itemData = {
+      _id: enteredId,
       name: enteredName,
       quantity: enteredQuantity,
       location: enteredLocation,
     };
 
-    props.addItem(itemData);
+    props.editItem(itemData);
     props.onConfirm();
   };
 
@@ -30,6 +33,12 @@ const Modal = (props) => {
       <div className="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white ">
         <form className="p-5">
           <div className="flex flex-col justify-center">
+            <input
+              type="text"
+              defaultValue={props.currentItem ? props.currentItem._id : ""}
+              ref={idInputRef}
+              hidden
+            />
             <div className="text-gray-700 md:flex md:items-center mt-5">
               <div className="text-left mb-1 ml-2 md:mb-0 md:w-1/3">
                 <label htmlFor="itemId">Item Name</label>
@@ -40,6 +49,7 @@ const Modal = (props) => {
                   type="text"
                   id="itemId"
                   ref={nameInputRef}
+                  defaultValue={props.currentItem ? props.currentItem.name : ""}
                   required
                 />
               </div>
@@ -54,6 +64,9 @@ const Modal = (props) => {
                   type="text"
                   id="itemQty"
                   ref={quantityInputRef}
+                  defaultValue={
+                    props.currentItem ? props.currentItem.quantity : ""
+                  }
                   required
                 />
               </div>
@@ -68,6 +81,9 @@ const Modal = (props) => {
                   type="text"
                   id="itemLocation"
                   ref={locationInputRef}
+                  defaultValue={
+                    props.currentItem ? props.currentItem.location : ""
+                  }
                   required
                 />
               </div>
@@ -78,7 +94,7 @@ const Modal = (props) => {
               className="h-10 px-5 m-2 text-green-100 transition-colors duration-150 bg-green-700 rounded-lg focus:shadow-outline hover:bg-green-800"
               onClick={handleSubmit}
             >
-              Add Item
+              Update Item
             </button>
             {/* TODO: Reset form logic */}
             <button className="h-10 px-5 m-2 text-red-100 transition-colors duration-150 bg-red-700 rounded-lg focus:shadow-outline hover:bg-red-800">

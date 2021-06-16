@@ -58,6 +58,22 @@ export default function Home({ isConnected }) {
       });
   };
 
+  const editItemHandler = (itemData) => {
+    fetch("/api/items", {
+      method: "PUT",
+      body: JSON.stringify(itemData),
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then(() => {
+        setIsFormSubmitted(true);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
   if (loading) {
     return (
       <section>
@@ -106,6 +122,7 @@ export default function Home({ isConnected }) {
             <SimpleList
               items={loadedItems}
               addItem={addItemHandler}
+              editItem={editItemHandler}
               changeFormSubmitState={changeFormSubmitState}
             />
           </div>

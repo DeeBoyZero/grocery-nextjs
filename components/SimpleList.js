@@ -2,7 +2,7 @@ import { useState } from "react";
 import AddItemModal from "./AddItemModal";
 import Backdrop from "./Backdrop";
 
-const SimpleList = ({ items, addItem }) => {
+const SimpleList = ({ items, addItem, changeFormSubmitState }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const addItemHandler = () => {
@@ -11,6 +11,26 @@ const SimpleList = ({ items, addItem }) => {
 
   const closeModalHandler = () => {
     setModalIsOpen(false);
+  };
+
+  const deleteItemHandler = (e) => {
+    const item = {
+      itemId: e.target.parentElement.parentElement.dataset.id,
+    };
+
+    if (confirm("Are you sure you want to delete this item?")) {
+      fetch("/api/items", {
+        method: "DELETE",
+        body: JSON.stringify(item),
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+        .then(changeFormSubmitState(true))
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
 
   return (
@@ -34,7 +54,11 @@ const SimpleList = ({ items, addItem }) => {
         <tbody className="">
           {items.map((item, index) => {
             return (
-              <tr key={index} className="bg-gray-300 text-black">
+              <tr
+                key={index}
+                data-id={item._id}
+                className="bg-gray-300 text-black"
+              >
                 <td className="border-grey-light border hover:bg-gray-100 p-3">
                   {item.name}
                 </td>
@@ -44,13 +68,16 @@ const SimpleList = ({ items, addItem }) => {
                 <td className="border-grey-light border hover:bg-gray-100 p-3">
                   {item.location}
                 </td>
-                <td>
+                <td className="border-grey-light border hover:bg-gray-100 p-3">
                   {/* TODO: EDIT Logic */}
-                  <span className="hover:bg-gray-100 p-2 text-green-400 hover:text-green-600 hover:font-medium cursor-pointer">
+                  <span className="hover:bg-gray-100 p-2 text-green-400 hover:text-green-600 cursor-pointer">
                     Edit
                   </span>
                   {/* TODO: DELETE Logic */}
-                  <span className="hover:bg-gray-100 p-2 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">
+                  <span
+                    onClick={deleteItemHandler}
+                    className="hover:bg-gray-100 p-2 text-red-400 hover:text-red-600 cursor-pointer"
+                  >
                     Delete
                   </span>
                 </td>

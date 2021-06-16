@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/client";
-import Link from "next/link";
 import Main from "../layout/main";
 import Head from "next/head";
 import MainNavigation from "../components/MainNavigation";
@@ -16,6 +15,10 @@ export default function Home({ isConnected }) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [session, loading] = useSession();
   const router = useRouter();
+
+  const changeFormSubmitState = (bool) => {
+    setIsFormSubmitted(bool);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -100,7 +103,11 @@ export default function Home({ isConnected }) {
             ></script>
           </Head>
           <div className="flex justify-center mt-5">
-            <SimpleList items={loadedItems} addItem={addItemHandler} />
+            <SimpleList
+              items={loadedItems}
+              addItem={addItemHandler}
+              changeFormSubmitState={changeFormSubmitState}
+            />
           </div>
         </div>
       )}
